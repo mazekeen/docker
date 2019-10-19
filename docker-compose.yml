@@ -1,0 +1,55 @@
+version: "3"
+services:
+    ### SERVICES
+    nginx:
+        build: images/nginx
+        volumes:
+            - "./config/nginx/conf.d:/etc/nginx/conf.d/"
+            - "./projects/firefly:/var/www/firefly:cached"
+            - "./projects/monkey:/var/www/monkey:cached"
+        networks:
+            default:
+                aliases:
+                    - firefly.dev
+                    - monkey.dev
+        ports:
+            - "80:80"
+            - "3000:443"
+        env_file:
+            - ".env"
+        depends_on:
+            - firefly
+            - monkey
+            - mysql
+
+    ### PROJECTS
+    firefly:
+        build:
+            context: ./projects/firefly
+            dockerfile: Dockerfile
+        env_file:
+            - ".env"
+        volumes:
+            - "./projects/firefly:/var/www/firefly"
+        depends_on:
+            - mysql
+    monkey:
+        build:
+            context: ./projects/monkey
+            dockerfile: Dockerfile
+        env_file:
+            - ".env"
+        volumes:
+            - "./projects/monkey:/var/www/monkey"
+        depends_on:
+            - mysql
+
+    ### DATABASES
+    mysql:
+        image: mysql
+        env_file:
+            - ".env"
+        ports:
+            - "3306:3306"
+        volumes:
+            - "./data/db/mysql:/var/lib/mysql"
