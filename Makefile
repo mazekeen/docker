@@ -10,3 +10,8 @@ stop:
 
 list:
 	@docker-compose ps
+
+github:
+	@git add .
+	@git commit -m "new changes"
+	@git push origin master
