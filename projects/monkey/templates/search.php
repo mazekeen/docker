@@ -1,22 +1,17 @@
-<?php include "templates/config.php" ?>
-
-<!-- Header -->
-
-<?php include "templates/header.php" ?>
-
-<!-- Navigation -->
-<?php include "templates/navigation.php" ?>
-
-    <!-- Page Content -->
-    <div class="container">
+<!-- Page Content -->
+<div class="container">
         <div class="row">
             <!-- Blog Entries Column -->
             <div class="col-md-8">
-                <?php
-                
-                $posts = $pdo->query("SELECT * FROM posts")->fetchAll();
-                
-                foreach($posts as $post): 
+<?php   
+        $keyword='search';
+        $query = $pdo->prepare('SELECT post_tags FROM posts');
+        $query->bindValue('search', '$keyword' );
+        $query->execute();  
+
+        if (!$query->rowCount() == 0) {
+        while ($results = $query->fetch()) {
+                    foreach($posts as $post): 
                     $post_title = $post['post_title'];
                     $post_author = $post['post_author'];
                     $post_date = $post['post_date'];
@@ -53,16 +48,8 @@
 
                 <hr>
                 <?php endforeach; ?>
+                <?php  }
+        } else {
+         echo 'Nothing found';
+         } ?>
             </div>
-
-           
-            <!-- Blog Sidebar Widgets Column -->
-            <?php include "templates/sidebar.php" ?>
-
-        </div>
-        <!-- /.row -->
-    </div>
-
-    <hr>
-
-<?php include "templates/footer.php" ?>

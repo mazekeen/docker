@@ -6,7 +6,13 @@ start:
 	@docker-compose up -d
 
 stop:
-	@docker-compose down	
+	@docker-compose down
+
+restart:
+	@docker-compose restart
+
+recreate:
+	@docker-compose up -d --force-recreate
 
 list:
 	@docker-compose ps

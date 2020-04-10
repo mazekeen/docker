@@ -10,8 +10,8 @@ services:
         networks:
             default:
                 aliases:
-                    - firefly.dev
-                    - monkey.dev
+                    - firefly.localhost
+                    - monkey.localhost
         ports:
             - "80:80"
             - "3000:443"
