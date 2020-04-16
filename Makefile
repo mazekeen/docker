@@ -17,7 +17,7 @@ recreate:
 list:
 	@docker-compose ps
 
-github:
+save:
 	@git add .
 	@git commit -m "new changes"
 	@git push origin master
