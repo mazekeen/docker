@@ -46,7 +46,7 @@ services:
 
     ### DATABASES
     mysql:
-        image: mysql
+        build: images/mysql
         env_file:
             - ".env"
         ports:

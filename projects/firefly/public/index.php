@@ -1,4 +1,4 @@
-<?php include './config.php'; ?>
+<?php include './config/database.php'; ?>
 <?php include './parts/header.php'; ?>
 
 <ul>
@@ -7,7 +7,7 @@
         <?php foreach ($row as $key => $value): ?>
         <b><?php echo $key; ?>:</b> <span><?php echo $value; ?></span> <br/>
         <?php endforeach; ?>
-    </li>    
+    </li>
 <?php endforeach; ?>
 </ul>
 
