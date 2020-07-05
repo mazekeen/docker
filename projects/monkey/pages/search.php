@@ -1,6 +1,5 @@
-<?php include "config/database.php" ?>
 <?php include "templates/header.php" ?>
-<?php include "templates/navigation.php" ?>
+
 
 <div class="container">
     <div class="row">

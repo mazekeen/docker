@@ -1,0 +1,9 @@
+page
+    configs\database
+
+    templates\header
+        templates\navigation
+
+    ...
+
+    templates\footer

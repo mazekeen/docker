@@ -1,44 +1,60 @@
-<?php include "config/database.php" ?>
 <?php include "templates/header.php" ?>
-<?php include "templates/navigation.php" ?>
 
 <div class="container">
-    <div class="row">
+    <div class="col-md-12">
 
         <div class="col-md-8">
             <?php
+            $per_page = 2;
+            if(isset($_GET['w_page'])) {
+                $page = $_GET['w_page'];
+            } else {
+                $page = "";
+            }
+            if($page == "" || $page == 1) {
+                $page_1 = 0;
+            } else {
+                $page_1 = ($page * $per_page) - $per_page;
+            }
 
-            $posts = $pdo->query("SELECT * FROM posts")->fetchAll();
+
+
+            $stmt = $pdo->prepare("SELECT * FROM posts");
+            $stmt->execute();
+            $count = $stmt->rowCount();
+
+            $count = ceil($count / $per_page);
+
+            $stmt = $pdo->prepare("SELECT * FROM posts WHERE post_status = ? LIMIT ?,?");
+            $stmt->execute(['published', $page_1, $per_page]);
+            $posts = $stmt->fetchAll();
+
 
             foreach ($posts as $post) :
-                $post_title = $post['post_title'];
-                $post_author = $post['post_author'];
-                $post_date = $post['post_date'];
-                $post_image = $post['post_image'];
-                $post_content = $post['post_content'];
+
             ?>
 
                 <h1 class="page-header"></h1>
                 <h2>
-                    <a href="#"><?php echo $post_title ?></a>
+                    <a href="?page=post&p_id=<?php echo $post['post_id']; ?>"><?php echo $post['post_title'] ?> </a>
                 </h2>
 
                 <p class="lead">
-                    by <a href="index.php"><?php echo $post_author ?></a>
+                    by <a href="?page=author_posts&author=<?php echo $post['post_author'] ?>&&p_id=<?php echo $post['post_id'] ?>"><?php echo $post['post_author'] ?></a>
                 </p>
                 <p>
-                    <span class="glyphicon glyphicon-time"></span> <?php echo $post_date ?>
+                    <span class="glyphicon glyphicon-time"></span> <?php echo $post['post_date']; ?>
                 </p>
 
                 <hr>
-                <img class="img-responsive" src="assets/images/<?php echo $post_image; ?>" alt="">
+                <a href="?page=post&p_id=<?php echo $post['post_id']; ?>">
+                    <img class="img-responsive" src="assets/images/<?php echo  $post['post_image']; ?>" alt="">
+                </a>
                 <hr>
 
-                <p><?php echo $post_content ?></p>
+                <p><?php echo substr($post['post_content'], 0, 100) ?></p>
+                <a class="btn btn-primary" href="?page=post&p_id=<?php echo $post['post_id']; ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
 
-                <a class="btn btn-primary" href="#">
-                    Read More <span class="glyphicon glyphicon-chevron-right"></span>
-                </a>
 
                 <hr>
             <?php endforeach; ?>
@@ -49,6 +65,17 @@
         </div>
     </div>
 </div>
+<ul class="pager">
+    <?php
+    for($i = 1; $i <= $count; $i++) {
+        if($i == $page) {
+            echo "<li><a class='active_link' href='index.php?w_page={$i}'>{$i}</a></li>";
+        } else {
+            echo "<li><a href='index.php?w_page={$i}'>{$i}</a></li>";
+        }
+    }
+    ?>
+</ul>
 
 <hr>
 

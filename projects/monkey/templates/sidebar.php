@@ -1,4 +1,4 @@
-<!-- Blog Search Well -->
+
 <div class="well">
     <h4>Blog Search</h4>
     <form action="?page=search" method="post">
@@ -11,11 +11,10 @@
             </span>
         </div>
     </form>
-    <!--search form-->
-    <!-- /.input-group -->
+
 </div>
 
-<!-- Blog Categories Well -->
+
 <div class="well">
 
     <?php
@@ -26,17 +25,19 @@
         <div class="col-lg-12">
             <ul class="list-unstyled">
                 <?php foreach ($categories as $category) : ?>
-                <?php echo "<li><a href=" . $category['cat_title'] . ">" . $category['cat_title'] . "</a></li>";
-                endforeach; ?>
+                    <li>
+                        <a href="?page=category&cat=<?php echo $category['cat_id']; ?>"><?php echo $category['cat_title']; ?> </a>
+                    </li>
+                <?php endforeach; ?>
+
 
             </ul>
         </div>
 
     </div>
-    <!-- /.row -->
+
 </div>
 
-<!-- Side Widget Well -->
 <div class="well">
     <?php include "templates/widget.php" ?>
 </div>

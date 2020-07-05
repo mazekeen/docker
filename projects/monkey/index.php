@@ -6,3 +6,4 @@ if ($_GET['page']) {
 }
 
 include './pages/homepage.php';
+?>

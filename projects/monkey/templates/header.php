@@ -1,3 +1,7 @@
+<?php
+include "config/database.php";
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,6 +20,7 @@
     <!-- Custom CSS -->
     <link href="assets/css/blog-home.css" rel="stylesheet">
     <link href="assets/css/blog-post.css" rel="stylesheet">
+    <link href="assets/css/styles.css" rel="stylesheet">
 
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -28,3 +33,9 @@
 </head>
 
 <body>
+    <?php
+    include "templates/navigation.php";
+
+
+
+    ?>

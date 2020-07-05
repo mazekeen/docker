@@ -7,11 +7,13 @@ services:
             - "./config/nginx/conf.d:/etc/nginx/conf.d/"
             - "./projects/firefly:/var/www/firefly:cached"
             - "./projects/monkey:/var/www/monkey:cached"
+            - "./projects/panda:/var/www/panda:cached"
         networks:
             default:
                 aliases:
                     - firefly.localhost
                     - monkey.localhost
+                    - panda.localhost
         ports:
             - "80:80"
             - "3000:443"
@@ -20,7 +22,7 @@ services:
         depends_on:
             - firefly
             - monkey
-            - mysql
+            - panda
 
     ### PROJECTS
     firefly:
@@ -41,6 +43,16 @@ services:
             - ".env"
         volumes:
             - "./projects/monkey:/var/www/monkey"
+        depends_on:
+            - mysql
+    panda:
+        build:
+            context: ./projects/panda
+            dockerfile: Dockerfile
+        env_file:
+            - ".env"
+        volumes:
+            - "./projects/panda:/var/www/panda"
         depends_on:
             - mysql
 
