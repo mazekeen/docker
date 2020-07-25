@@ -1,6 +1,9 @@
 FROM php:7.2-fpm-alpine
 
 RUN apk add --update --no-cache \
+    nodejs \
+    npm \
+    make \
     freetype \
     libjpeg-turbo \
     libpng \
@@ -31,6 +34,11 @@ RUN apk add --update --no-cache \
     && rm -rf /var/cache/apk/* \
     && rm -rf /tmp/*
 
+RUN npm install -g yarn
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
 COPY . .
 
-WORKDIR /var/www/monkey
+WORKDIR /var/www/panda
+
+CMD make start

@@ -9,8 +9,6 @@ RUN rm /etc/nginx/conf.d/default.conf
 RUN adduser -D -g '' -G www-data www-data
 RUN chmod -R 777 /var/tmp/nginx
 
-WORKDIR /var/www
-
-CMD ["nginx"]
+CMD ["nginx", "-g", "daemon off;"]
 
 EXPOSE 80 443
